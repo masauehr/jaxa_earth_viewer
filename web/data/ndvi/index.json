@@ -1,0 +1,47 @@
+{
+ "id": "ndvi",
+ "label": "植生指数 NDVI（GCOM-C/SGLI・月）",
+ "collection": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-NDVI.daytime.v3_global_monthly",
+ "band": "NDVI",
+ "unit": "NDVI（-）",
+ "levels": [
+  0,
+  0.1,
+  0.2,
+  0.3,
+  0.4,
+  0.5,
+  0.6,
+  0.7,
+  0.8
+ ],
+ "extend": "both",
+ "citation": "JAXA GCOM-C/SGLI L3 植生指数（G-Portal）",
+ "colors": [
+  "#ffffe5",
+  "#f7fcbe",
+  "#e0f2a8",
+  "#bbe395",
+  "#90d082",
+  "#60ba6d",
+  "#379e54",
+  "#1b7e40",
+  "#006435",
+  "#004529"
+ ],
+ "bounds": [
+  [
+   20,
+   120
+  ],
+  [
+   50,
+   150
+  ]
+ ],
+ "dates": [
+  "2026-06-01",
+  "2026-07-01",
+  "2026-09-01"
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "id": "dsm",
+ "label": "標高 DSM（ALOS AW3D30）",
+ "collection": "JAXA.EORC_ALOS.PRISM_AW3D30.v3.2_global",
+ "band": "DSM",
+ "unit": "m",
+ "levels": [
+  1,
+  100,
+  300,
+  500,
+  1000,
+  1500,
+  2000,
+  3000
+ ],
+ "extend": "max",
+ "citation": "JAXA EORC ALOS World 3D (AW3D30) v3.2",
+ "colors": [
+  "#333399",
+  "#0393f9",
+  "#21d26c",
+  "#b5f08a",
+  "#dcd286",
+  "#92735e",
+  "#b5a09b",
+  "#ffffff"
+ ],
+ "bounds": [
+  [
+   20,
+   120
+  ],
+  [
+   50,
+   150
+  ]
+ ],
+ "dates": [
+  "2021-02-01"
+ ]
+}

@@ -1,0 +1,47 @@
+{
+ "id": "sst",
+ "label": "海面水温（GCOM-C/SGLI・月平均・昼）",
+ "collection": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly",
+ "band": "SST",
+ "unit": "℃",
+ "levels": [
+  0,
+  5,
+  10,
+  15,
+  20,
+  24,
+  26,
+  28,
+  30
+ ],
+ "extend": "both",
+ "citation": "JAXA GCOM-C/SGLI L3 海面水温（G-Portal）",
+ "colors": [
+  "#30123b",
+  "#4560d6",
+  "#36a8f9",
+  "#1ae4b6",
+  "#71fd5f",
+  "#c5ef33",
+  "#f9ba38",
+  "#f66b18",
+  "#cb2b03",
+  "#7a0402"
+ ],
+ "bounds": [
+  [
+   20,
+   120
+  ],
+  [
+   50,
+   150
+  ]
+ ],
+ "dates": [
+  "2026-07-01",
+  "2026-08-01",
+  "2026-09-01"
+ ]
+}

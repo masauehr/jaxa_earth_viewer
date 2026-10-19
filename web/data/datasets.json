@@ -1,0 +1,18 @@
+[
+ {
+  "id": "precip",
+  "label": "降水（GSMaP・日平均）"
+ },
+ {
+  "id": "sst",
+  "label": "海面水温（GCOM-C/SGLI・月平均・昼）"
+ },
+ {
+  "id": "ndvi",
+  "label": "植生指数 NDVI（GCOM-C/SGLI・月）"
+ },
+ {
+  "id": "dsm",
+  "label": "標高 DSM（ALOS AW3D30）"
+ }
+]

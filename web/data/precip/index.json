@@ -1,4 +1,6 @@
 {
+ "id": "precip",
+ "label": "降水（GSMaP・日平均）",
  "collection": "JAXA.EORC_GSMaP_standard.Gauge.00Z-23Z.v6_daily",
  "band": "PRECIP",
  "unit": "mm/h（日平均）",
@@ -13,6 +15,8 @@
   8,
   16
  ],
+ "extend": "max",
+ "citation": "Japan Aerospace Exploration Agency. 1998. GSMaP(Hourly). DOI:10.57746/EO.01gs73bkt358gfpy92y2qns5e9",
  "colors": [
   "#30123b",
   "#4668e0",
@@ -24,7 +28,6 @@
   "#d23005",
   "#7a0402"
  ],
- "citation": "Japan Aerospace Exploration Agency. 1998. GSMaP(Hourly). DOI:10.57746/EO.01gs73bkt358gfpy92y2qns5e9",
  "bounds": [
   [
    20,
@@ -37,6 +40,7 @@
  ],
  "dates": [
   "2026-10-10",
+  "2026-10-13",
   "2026-10-14",
   "2026-10-15"
  ]

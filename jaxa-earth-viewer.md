@@ -4,25 +4,28 @@
 
 JAXA が提供する **JAXA Earth API**（STAC / COG ベース、Python版・JavaScript版あり）から衛星データを取得し、地図上に表示するプロダクト。
 
-> 状態: Phase 1 完了（2026-10-19）。GSMaP降水を Leaflet 地図に表示する最小ビューアが動作。検証は [docs/phase0_report.md](docs/phase0_report.md)。
+> 状態: Phase 2 完了（2026-10-19）。降水・海面水温・NDVI・標高の4データセットを切り替えて表示できる。検証は [docs/phase0_report.md](docs/phase0_report.md)。
 
-## 使い方（Phase 1）
+## 使い方
 
 ```bash
 # 環境構築（初回のみ）
 python3 -m venv .venv
 .venv/bin/pip install --extra-index-url https://data.earth.jaxa.jp/api/python/repository/ jaxa-earth
 
-# 降水オーバーレイ生成（日付省略で取得できる最新日。--date YYYY-MM-DD で指定）
+# オーバーレイ生成（全データセットの最新3件。-d で指定、-n で件数、--date で日付指定）
 .venv/bin/python -I scripts/gen_overlay.py
+.venv/bin/python -I scripts/gen_overlay.py -d sst -n 6
 
 # 表示
 python3 -m http.server 8765 -d web   # → http://localhost:8765/
 ```
 
-- `scripts/gen_overlay.py`: GSMaP日降水を取得 → Webメルカトル補正 → 階級配色の透過PNG（`web/data/precip/`）と `index.json`（凡例・出典）を生成
-- `web/`: Vanilla JS + Leaflet（背景は国土地理院タイル）。日付選択・前後ボタン・透過度・凡例・出典表示
-- 注意: GSMaP日降水の単位は **mm/h（日平均の降水強度）**。公開は実日付の約3〜4日遅れ（2026-10-19時点で10/15が最新）
+- `scripts/datasets.py`: データセット定義（コレクションID・バンド・解像度・配色・階級）。追加はここに1件足すだけ
+- `scripts/gen_overlay.py`: 取得 → Webメルカトル補正 → 階級配色の透過PNG（`web/data/<id>/`）と `index.json`（凡例・出典）、`web/data/datasets.json` を生成。未公開の日・月は遡って取得
+- `web/`: Vanilla JS + Leaflet（背景は国土地理院タイル）。データセット切替・日付選択・前後ボタン・透過度・凡例・選択中データの出典表示。`?ds=sst` で初期データセットを指定可
+- 表示データ: 降水(GSMaP日・mm/h日平均) / 海面水温(SGLI月・昼・℃) / NDVI(SGLI月) / 標高(AW3D30・静的)
+- 注意: 公開は降水が約3〜4日遅れ、SST・NDVI は翌月以降（当月は未公開）。NDVI は 2026-08 がソース側で未提供。SST日別は雲で約74%欠測のため月別を採用
 
 ## 1. 目的
 
@@ -77,7 +80,7 @@ python3 -m http.server 8765 -d web   # → http://localhost:8765/
 |---|---|---|
 | 0 ✅ | 調査・検証 | 公式ドキュメントでJS/Python両版の使い方を確認し、1データセットを取得できる。方式A/Bを決定 |
 | 1 ✅ | 最小ビューア | 1データセットを地図に表示（日本周辺・単一日） |
-| 2 | 複数データセット対応 | データセット切替・凡例・カラーマップ・出典表示 |
+| 2 ✅ | 複数データセット対応 | データセット切替・凡例・カラーマップ・出典表示 |
 | 3 | 時系列・差分 | 期間スライダー、差分表示、地点の時系列グラフ |
 | 4 | 公開・運用 | GitHub Pages 等で公開、必要なら日次更新を launchd 化 |
 
@@ -101,6 +104,6 @@ jaxa_earth_viewer/
 
 ## 7. 次のアクション
 
-1. Phase 2: データセット切替（海面水温・植生・標高）、データセットごとの配色・凡例・出典
-2. 日付の自動更新（日次バッチ）と取得失敗日のスキップ
-3. JS版（方式A）の可否を確認する
+1. Phase 3: 時系列スライダー・差分表示（平年差）・地点クリックの時系列グラフ
+2. 日次バッチ化（launchd）と古い画像の整理
+3. 標高の配色見直し（現状 terrain は低地が青く海と紛らわしい）、JS版（方式A）の可否確認
