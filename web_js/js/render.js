@@ -1,14 +1,20 @@
 // 描画の部品: メルカトル補正と階級配色（Python版 scripts/gen_overlay.py の to_mercator / colorize / legend と同じ考え方）
 
-// 緯度等間隔の配列を、Webメルカトルの縦軸で等間隔になる行の並びに引き直す（最近傍）
-export function mercatorRowIndex(height, south, north) {
-  const my = (lat) => Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 360));
+const my = (lat) => Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 360));
+
+// メルカトル投影した画像の高さ（横幅 width px、経度幅 lonSpan° のとき、縦横比がメルカトルで等しくなる高さ）
+export function mercatorHeight(width, south, north, west, east) {
+  return Math.max(2, Math.round(((my(north) - my(south)) * width) / (((east - west) * Math.PI) / 180)));
+}
+
+// 出力の各行(メルカトルで等間隔)が、緯度等間隔のデータのどの行に当たるか（最近傍）
+export function mercatorRowIndex(outH, srcH, south, north) {
   const top = my(north), bottom = my(south);
-  const rows = new Int32Array(height);
-  for (let r = 0; r < height; r++) {
-    const y = top + ((bottom - top) * r) / (height - 1);
+  const rows = new Int32Array(outH);
+  for (let r = 0; r < outH; r++) {
+    const y = top + ((bottom - top) * (r + 0.5)) / outH;
     const lat = (2 * Math.atan(Math.exp(y)) - Math.PI / 2) * (180 / Math.PI);
-    rows[r] = Math.min(height - 1, Math.max(0, Math.floor(((north - lat) / (north - south)) * height)));
+    rows[r] = Math.min(srcH - 1, Math.max(0, Math.floor(((north - lat) / (north - south)) * srcH)));
   }
   return rows;
 }
@@ -29,15 +35,16 @@ export function classIndex(v, levels, extend) {
 // DataObject（緯度等間隔）→ メルカトル補正した階級配色の Canvas
 export function toCanvas(dataObject, def, alpha = 190) {
   const { width, height, data, bbox } = dataObject;
-  const [, south, , north] = bbox;
-  const rows = mercatorRowIndex(height, south, north);
+  const [west, south, east, north] = bbox;
+  const outH = mercatorHeight(width, south, north, west, east);
+  const rows = mercatorRowIndex(outH, height, south, north);
   const rgb = def.colors.map(hex);
   const canvas = document.createElement("canvas");
   canvas.width = width;
-  canvas.height = height;
+  canvas.height = outH;
   const ctx = canvas.getContext("2d");
-  const img = ctx.createImageData(width, height);
-  for (let r = 0; r < height; r++) {
+  const img = ctx.createImageData(width, outH);
+  for (let r = 0; r < outH; r++) {
     const src = rows[r] * width;
     for (let c = 0; c < width; c++) {
       const k = classIndex(data[src + c], def.levels, def.extend);
