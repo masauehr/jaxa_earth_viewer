@@ -4,7 +4,16 @@
 
 JAXA が提供する **JAXA Earth API**（STAC / COG ベース、Python版・JavaScript版あり）から衛星データを取得し、地図上に表示するプロダクト。
 
-> 状態: Phase 3 完了（2026-10-19）。時系列スライダー＋再生、降水の平年差、地点クリックの値・時系列グラフに対応。検証は [docs/phase0_report.md](docs/phase0_report.md)。
+> 状態: Phase 4 完了・公開中（2026-10-19）。https://masauehr.github.io/jaxa_earth_viewer/ 。launchd で毎日 11:00/16:00 に自動更新。検証は [docs/phase0_report.md](docs/phase0_report.md)。
+
+## 公開・運用（Phase 4）
+
+- **公開**: GitHub Pages（`.github/workflows/pages.yml` が `web/` をデプロイ）。https://masauehr.github.io/jaxa_earth_viewer/
+- **日次更新**: launchd `com.user.jaxa_earth_viewer`（`scripts/com.user.jaxa_earth_viewer.plist` が控え。実体は `~/Library/LaunchAgents/`）が毎日 11:00 と 16:00 に `scripts/daily_update.sh` を実行 → データ生成 → 変更があれば commit/push → Pages が自動で再デプロイ。ログは `launchd.log`（git除外）
+  - 登録: `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.user.jaxa_earth_viewer.plist`／解除: `launchctl bootout gui/$(id -u)/com.user.jaxa_earth_viewer`
+- **保持期間**: 日別は直近14日、月別は直近12か月（`scripts/datasets.py` の `keep`）。超えた古い画像・グリッドは `gen_overlay.py` が自動で削除。全面欠測（ソース側の欠損）の日はスキップ。`--force` で取得済みの日付も再生成
+- **データの利用条件（JAXA 地球観測データポリシー）**: 無償で利用・改変・再配布できる。条件は ①JAXAと研究名のクレジット表記（例: "Credit: GSMaP (JAXA)"）②JAXA以外の機関データを含む場合はその機関にも謝辞 ③**商用利用は事前にJAXAへ通知**。著作権はJAXAに帰属し、利用条件は予告なく変わる場合がある。本ビューアは個人の非商用公開で、画面右下の出典欄にクレジットを表示している
+  - ポリシー原文: https://earth.jaxa.jp/en/data/policy/ 。各コレクションのSTACの `license` は `proprietary`（上記ポリシーへのリンク付き）
 
 ## 使い方
 
@@ -86,7 +95,7 @@ python3 -m http.server 8765 -d web   # → http://localhost:8765/
 | 1 ✅ | 最小ビューア | 1データセットを地図に表示（日本周辺・単一日） |
 | 2 ✅ | 複数データセット対応 | データセット切替・凡例・カラーマップ・出典表示 |
 | 3 ✅ | 時系列・差分 | 期間スライダー、差分表示、地点の時系列グラフ |
-| 4 | 公開・運用 | GitHub Pages 等で公開、必要なら日次更新を launchd 化 |
+| 4 ✅ | 公開・運用 | GitHub Pages 等で公開、必要なら日次更新を launchd 化 |
 
 ## 5. ディレクトリ構成（予定）
 
@@ -108,6 +117,6 @@ jaxa_earth_viewer/
 
 ## 7. 次のアクション
 
-1. Phase 4: GitHub Pages 公開、日次バッチ化（launchd）、古い画像の整理
-2. 標高の配色見直し（terrain は低地が青く海と紛らわしい）、平年差凡例のラベル重なり（±0.05）の調整
-3. JS版（方式A）の可否確認
+1. 運用: 数日おきに `launchd.log` と Pages の更新を確認する
+2. 追加データセット（例: 土壌水分 AMSR2 SMC とその平年差、地表面温度 SGLI LST）を `scripts/datasets.py` に足す
+3. JS版（方式A）の可否確認（現状は方式Bで十分動いているため優先度低）

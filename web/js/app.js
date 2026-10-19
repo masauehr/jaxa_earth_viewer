@@ -158,6 +158,8 @@ map.on("click", async (e) => {
   if (!meta) return;
   const id = meta.id;
   const dates = meta.dates;
+  // 値グリッドの読み込みに時間がかかるため、先に仮のポップアップを出す
+  L.popup().setLatLng(e.latlng).setContent("読み込み中…").openOn(map);
   try {
     const grids = await Promise.all(dates.map(loadGrid));
     if (id !== meta.id) return; // 読み込み中にデータセットが切り替わった

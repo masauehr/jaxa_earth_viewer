@@ -56,3 +56,9 @@ arr = je.ImageProcess(data).raster.img[0]   # numpy配列 (行, 列, 1)
 - `*-normal` コレクションは年に依存しない（2012・2021・2026 のどれを指定しても同じ値）。月別降水の平年差は `monthly - monthly-normal` を同じ月日で取得して算出する。
 - 平年値があるのは GSMaP降水、AMSR2 SMC、JASMES(MODIS) の swr/ndvi/taua、MODIS LST、SGLI LST など。SGLI の SST・NDVI と同一プロダクトの平年値は無い。
 - 値グリッドは Int16 に量子化（降水・NDVI は×1000、SST は×100、標高は×1）してgzipで同梱。600×600 で約0.1〜0.3MB/件、`web/data` 全体で約3MB。
+
+## Phase 4 で判明した事項（2026-10-19）
+- JAXA 地球観測データポリシー（https://earth.jaxa.jp/en/data/policy/）: 無償で利用・改変・第三者への配布が可能。JAXA と研究名のクレジット表記が必須（"Credit: XXXX (JAXA)" 等）、商用利用は事前通知が必要、著作権はJAXA帰属。STAC の license は `proprietary` でこのポリシーへのリンクが付く。
+- ソース側に全面NaNの日がある（GSMaP 2026-10-11）。保存しないようスキップしている。
+- GitHub Pages では `.bin.gz` が圧縮済みのまま届くか、転送時に解凍されるかが環境で異なり得るため、クライアントでgzipの印(1f 8b)を見て分岐している。公開サイトでの動作を確認済み。
+- 地点クリックは全日付のグリッド読み込みが初回に数秒かかる（12か月分）ため、「読み込み中…」を先に表示する。
