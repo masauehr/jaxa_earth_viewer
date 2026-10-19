@@ -35,3 +35,10 @@ arr = je.ImageProcess(data).raster.img[0]   # numpy配列 (行, 列, 1)
 ## 決定
 - Phase 1 は **方式B（Python取得 → 画像/配列を生成 → Webで表示）** で進める。
 - 次の課題: 欠測値の扱い、データの鮮度（最新日）、取得時間、座標・向きの検証（地図重畳時）。
+
+## Phase 1 で判明した事項（2026-10-19）
+- GSMaP日降水 `PRECIP` は「降水強度（日平均）」で単位は mm/h（STACのtitle: Precipitation Rate (Daily)）。
+- このコレクションの最大解像度は 10ppu（STAC `je:ppu_max`）。
+- 最新日は実日付の約3〜4日遅れ。未公開日は `No date list found!` の例外になるため、遡って取得する。
+- 欠測(NaN)は日本周辺では0%。配列は北→南・西→東の並びで、地図に重ねて海岸線と整合することを確認した。
+- 緯度等間隔の画像は、Leaflet の imageOverlay（メルカトル）では歪むため、縦方向をメルカトル補正して出力している。
