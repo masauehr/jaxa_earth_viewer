@@ -7,6 +7,7 @@
 未公開の日・月は例外になるため、新しい方から遡って取得できたものを使う。
 """
 import argparse
+import gzip
 import json
 import math
 import sys
@@ -41,17 +42,31 @@ def candidates(ds):
     return out
 
 
-def fetch(ds, day):
-    """指定日の配列(行=北→南, 列=西→東)を返す。取得できなければNone"""
+def fetch_one(collection, band, ppu, day):
     d = day.strftime("%Y-%m-%dT00:00:00")
+    data = je.ImageCollection(collection=collection, ssl_verify=True)\
+        .filter_date(dlim=[d, d]).filter_resolution(ppu=ppu)\
+        .filter_bounds(bbox=BBOX).select(band=band).get_images()
+    return np.array(je.ImageProcess(data).raster.img[0], dtype="float64")[:, :, 0]
+
+
+def fetch(ds, day):
+    """指定日の配列(行=北→南, 列=西→東)を返す。取得できなければNone。normal指定時は平年差"""
     try:
-        data = je.ImageCollection(collection=ds["collection"], ssl_verify=True)\
-            .filter_date(dlim=[d, d]).filter_resolution(ppu=ds["ppu"])\
-            .filter_bounds(bbox=BBOX).select(band=ds["band"]).get_images()
-        return np.array(je.ImageProcess(data).raster.img[0], dtype="float64")[:, :, 0]
+        arr = fetch_one(ds["collection"], ds["band"], ds["ppu"], day)
+        if "normal" in ds:  # 平年値コレクションは年に依存しないので同じ日付で取得できる
+            arr = arr - fetch_one(ds["normal"]["collection"], ds["normal"]["band"], ds["ppu"], day)
+        return arr
     except Exception as e:  # 未公開日などは例外になる
         print("取得失敗", ds["id"], day, type(e).__name__, e)
         return None
+
+
+def save_grid(path, arr, scale):
+    """値グリッドをInt16(×scale)・gzipで保存する。欠測は-32768。クリック時の値表示・時系列用"""
+    q = np.where(np.isnan(arr), -32768, np.clip(np.round(arr * scale), -32767, 32767)).astype("<i2")
+    with gzip.open(path, "wb") as f:
+        f.write(q.tobytes())
 
 
 def to_mercator(arr):
@@ -95,7 +110,10 @@ def write_index(ds):
     folder = OUT / ds["id"]
     meta = {k: ds[k] for k in ("id", "label", "collection", "band", "unit", "levels", "extend", "citation")}
     meta["colors"] = legend_colors(ds)
+    meta.update(json.loads((folder / "grid.json").read_text()))  # グリッドの幅・高さ
     meta["bounds"] = [[BBOX[1], BBOX[0]], [BBOX[3], BBOX[2]]]  # Leaflet形式[[南,西],[北,東]]
+    meta["scale"] = ds["scale"]
+    meta["normal"] = "normal" in ds
     meta["dates"] = sorted(p.stem for p in folder.glob("*.png"))
     (folder / "index.json").write_text(json.dumps(meta, ensure_ascii=False, indent=1))
     return meta
@@ -109,13 +127,17 @@ def run(ds, days, n):
         if got >= n:
             break
         path = folder / f"{day}.png"
-        if path.exists():  # 取得済みはスキップして件数に数える
+        grid = folder / f"{day}.bin.gz"
+        if path.exists() and grid.exists():  # 取得済みはスキップして件数に数える
             got += 1
             continue
         arr = fetch(ds, day)
         if arr is None:
             continue
         Image.fromarray(colorize(ds, to_mercator(arr))).save(path)
+        save_grid(grid, arr, ds["scale"])
+        h, w = arr.shape
+        (folder / "grid.json").write_text(json.dumps({"width": w, "height": h}))
         print("生成:", ds["id"], day, "NaN率 %.2f" % np.isnan(arr).mean())
         got += 1
     return write_index(ds)

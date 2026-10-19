@@ -7,7 +7,11 @@ html, body { height: 100%; margin: 0; font-family: sans-serif; }
 }
 #dataset { width: 100%; margin-bottom: 8px; font-weight: bold; }
 .row { display: flex; gap: 4px; align-items: center; margin-bottom: 8px; }
-.row select { flex: 1; }
+.row select, .row input[type=range] { flex: 1; min-width: 0; }
+.chart { margin-top: 6px; }
+.chart svg { width: 100%; height: auto; display: block; }
+.chart .axis { font-size: 10px; fill: #555; }
+.pt-value { font-weight: bold; margin-bottom: 2px; }
 #legend .bar { display: flex; height: 12px; }
 #legend .bar span { flex: 1; }
 #legend .labels { position: relative; height: 14px; font-size: 11px; margin-top: 2px; }

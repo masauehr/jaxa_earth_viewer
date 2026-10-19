@@ -26,6 +26,8 @@
   "#b5a09b",
   "#ffffff"
  ],
+ "width": 600,
+ "height": 600,
  "bounds": [
   [
    20,
@@ -36,6 +38,8 @@
    150
   ]
  ],
+ "scale": 1,
+ "normal": false,
  "dates": [
   "2021-02-01"
  ]

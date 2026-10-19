@@ -51,3 +51,8 @@ arr = je.ImageProcess(data).raster.img[0]   # numpy配列 (行, 列, 1)
 | SGLI NDVI 月別 | 40 | YYYY-MM | 欠測73%は海。2026-08 はソース未提供 |
 | AW3D30 DSM | 3600 | 2021-02 のみ | 静的データ。海は欠測 |
 - `python -I` ではスクリプトのディレクトリが import パスに入らないため、`gen_overlay.py` で `sys.path` に追加している。
+
+## Phase 3 で判明した事項（2026-10-19）
+- `*-normal` コレクションは年に依存しない（2012・2021・2026 のどれを指定しても同じ値）。月別降水の平年差は `monthly - monthly-normal` を同じ月日で取得して算出する。
+- 平年値があるのは GSMaP降水、AMSR2 SMC、JASMES(MODIS) の swr/ndvi/taua、MODIS LST、SGLI LST など。SGLI の SST・NDVI と同一プロダクトの平年値は無い。
+- 値グリッドは Int16 に量子化（降水・NDVI は×1000、SST は×100、標高は×1）してgzipで同梱。600×600 で約0.1〜0.3MB/件、`web/data` 全体で約3MB。

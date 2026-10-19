@@ -1,0 +1,53 @@
+{
+ "id": "precip_m_diff",
+ "label": "降水の平年差（GSMaP・月平均−平年）",
+ "collection": "JAXA.EORC_GSMaP_standard.Gauge.00Z-23Z.v6_monthly",
+ "band": "PRECIP",
+ "unit": "mm/h（平年差。茶=少 青緑=多）",
+ "levels": [
+  -2,
+  -1,
+  -0.5,
+  -0.2,
+  -0.05,
+  0.05,
+  0.2,
+  0.5,
+  1,
+  2
+ ],
+ "extend": "both",
+ "citation": "Japan Aerospace Exploration Agency. 1998. GSMaP(Hourly). DOI:10.57746/EO.01gs73bkt358gfpy92y2qns5e9（平年は2012〜2021年）",
+ "colors": [
+  "#543005",
+  "#8a5009",
+  "#bf812d",
+  "#dec07b",
+  "#f6e8c3",
+  "#f5f4f4",
+  "#c7eae5",
+  "#81cdc1",
+  "#35978f",
+  "#02665e",
+  "#003c30"
+ ],
+ "width": 300,
+ "height": 300,
+ "bounds": [
+  [
+   20,
+   120
+  ],
+  [
+   50,
+   150
+  ]
+ ],
+ "scale": 1000,
+ "normal": true,
+ "dates": [
+  "2026-07-01",
+  "2026-08-01",
+  "2026-09-01"
+ ]
+}

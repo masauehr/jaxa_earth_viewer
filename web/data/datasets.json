@@ -4,6 +4,14 @@
   "label": "降水（GSMaP・日平均）"
  },
  {
+  "id": "precip_m",
+  "label": "降水（GSMaP・月平均）"
+ },
+ {
+  "id": "precip_m_diff",
+  "label": "降水の平年差（GSMaP・月平均−平年）"
+ },
+ {
   "id": "sst",
   "label": "海面水温（GCOM-C/SGLI・月平均・昼）"
  },
