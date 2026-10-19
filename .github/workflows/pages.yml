@@ -1,9 +1,10 @@
-# web/ を GitHub Pages にデプロイする（データ更新のpushでも自動で走る）
+# Pages に web/（Python生成版）を載せ、web_js/（JS版）を /js-version/ に同居させてデプロイする
+# （データ更新のpushでも自動で走る）
 name: Deploy Pages
 on:
   push:
     branches: [main]
-    paths: ["web/**", ".github/workflows/pages.yml"]
+    paths: ["web/**", "web_js/**", ".github/workflows/pages.yml"]
   workflow_dispatch:
 permissions:
   contents: read
@@ -20,9 +21,14 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - name: 配信ファイルを組み立てる
+        run: |
+          mkdir _site
+          cp -r web/. _site/
+          cp -r web_js _site/js-version
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: web
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4

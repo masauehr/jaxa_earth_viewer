@@ -1,0 +1,16 @@
+# Render のブループリント（静的サイト）。JS版(web_js/)を配信する。
+# JS版はブラウザがJAXAのデータ置き場(CORS: *)へ直接アクセスするため、サーバー処理もビルドも不要。
+# 認証なし・個人情報なしの公開アプリ（JAXAの公開データのみ。出典はアプリ内に表示）。
+# 静的サイトは plan を指定できない（Renderの仕様）。
+services:
+  - type: web
+    name: jaxa-earth-viewer
+    runtime: static
+    buildCommand: "echo no build"
+    staticPublishPath: ./web_js
+    autoDeployTrigger: commit
+    # 日次更新(web/data)のcommitではビルドしない。JS版の変更だけで再デプロイする
+    buildFilter:
+      paths:
+        - web_js/**
+        - render.yaml
