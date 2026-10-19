@@ -92,7 +92,7 @@ JavaScript 版（ブラウザが JAXA のデータを直接取得して描画す
 | J0 ✅ | 検証（最小HTML） | `web_js/j0.html` で CORS・取得速度・Python版との一致・平年差・最新日・値の読み取りを確認し、**GO** と判断（2026-10-19）。[docs/js_j0_report.md](docs/js_j0_report.md) |
 | J1 ✅ | データセット定義の移植 | `scripts/datasets.py` 相当を JSON（または JS）に。階級配色・凡例・出典・`offset`/平年差を `ColorMap` と `compute` で再現。既存14件のうち主要5件で見た目が現行と一致 |
 | J2 ✅ | UI の移植 | データセット／日付選択、スライダー・再生、透過度、凡例、出典（現行の `web/js/app.js` を土台）。地点クリックの値・時系列（`getDataObject` の値、または時系列サンプルを使用） |
-| J3 🔶 | Render 公開（CORS確認・render.yaml 済み／Render 作成は未） | `render.yaml` を置き、Static Site（CORS 次第で Web Service）としてデプロイ。公開URLで全データセットの表示を確認 |
+| J3 ✅ | Render 公開 | `render.yaml` を置き、Static Site（CORS 次第で Web Service）としてデプロイ。公開URLで全データセットの表示を確認 |
 | J4 | 切り替え・整理 | JS 版が現行（方式B）と同等以上になった時点で、launchd 停止・`web/data` の削除（またはフォールバック用に縮小）。README・pc_docs を更新 |
 
 **方式B（Python 生成）は J3 まで維持する**。JS 版が上回るまで現行の公開と日次更新は止めない。
@@ -130,8 +130,15 @@ JavaScript 版（ブラウザが JAXA のデータを直接取得して描画す
   3. 発行された `https://jaxa-earth-viewer-xxxx.onrender.com/` で全データセットの表示を確認する（確認済みの github.io と同じ挙動のはず）。`buildFilter` の書式でエラーが出たら、そのメッセージを見て調整する
 - 静的サイトの無料枠（帯域・パイプライン分の月間枠。具体的な上限値は公式ドキュメントに数値の記載なし）はダッシュボードの請求ページで確認する。
 
+### 2.10 J3 完了: Render 公開（2026-10-19）
+- Render ダッシュボードで Blueprint を作成（`masauehr/jaxa_earth_viewer` の `main`）。同期は成功し、静的サイト `jaxa-earth-viewer` が作成された（`render.yaml` の `buildFilter` 等の構文エラーなし）。
+- **公開URL: https://jaxa-earth-viewer.onrender.com/**（`?ds=swr_diff` のように初期データセットを指定可）。
+- 確認: 日射量の平年差の表示、クリックでの値と12か月の時系列グラフが Render 上で動作（`Cache-Control: public, max-age=0, s-maxage=300`。JS/CSSは `?v=` で更新を反映）。
+- 以後、`web_js/**` を変更して main に push すると Render が自動デプロイする。日次データ更新（`web/data`）の commit では再ビルドしない。
+
 ## 3. 次のアクション（提案）
 1. ~~J1~~ 完了（2.7）。
 2. ~~J2~~ 完了（2.8）。スマホ実機での確認が残る。
-3. **J3**: 公開オリジンの CORS は確認済み・`render.yaml` は用意済み（2.9）。**残りは Render ダッシュボードでの Blueprint 作成（ユーザー操作）** と、Render の URL での表示確認。
-4. 並行して、優先「高」のデータセット（夜間 LST・夜間 SMC・降水半月値）の追加は、JS版の定義 JSON に足す形で進められる。
+3. ~~J3~~ 完了（2.10）。
+4. **J4（次）**: 現行（方式B: Python生成版・launchd日次更新・`web/data`）をどう整理するか決める。JS版が同等以上であることは確認済みなので、候補は ①Pages のルートを JS版に切り替え、Python版は縮退（フォールバック）として残す ②launchd 日次更新を停止し `web/data`（約39MB）を削除 ③README・pc_docs・memory の更新。**launchd 停止とデータ削除は元に戻しにくいので、実施前に確認する**。
+5. 並行して、優先「高」のデータセット（夜間 LST・夜間 SMC・降水半月値）の追加は、JS版の定義 JSON に足す形で進められる。

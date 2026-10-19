@@ -4,7 +4,7 @@
 
 JAXA が提供する **JAXA Earth API**（STAC / COG ベース、Python版・JavaScript版あり）から衛星データを取得し、地図上に表示するプロダクト。
 
-> 状態: Phase 4 完了・公開中（2026-10-19）。https://masauehr.github.io/jaxa_earth_viewer/ 。launchd で毎日 11:00/16:00 に自動更新。検証は [docs/phase0_report.md](docs/phase0_report.md)。
+> 状態: Phase 4 完了・公開中。**JS版（Render）: https://jaxa-earth-viewer.onrender.com/** ／ Python生成版（GitHub Pages）: https://masauehr.github.io/jaxa_earth_viewer/ 。Python生成版は launchd で毎日 11:00/16:00 に自動更新。検証は [docs/phase0_report.md](docs/phase0_report.md)。
 
 > 今後の計画（追加データセット候補、JavaScript版＋Render公開の検討）は [plan.md](plan.md) を参照。
 
@@ -131,6 +131,6 @@ jaxa_earth_viewer/
 ## 7. 次のアクション
 
 [plan.md](plan.md) に集約。要点:
-1. JavaScript版（JAXA Earth API v2.0.1）＋ Render 公開: **J0 検証完了・GO**（[docs/js_j0_report.md](docs/js_j0_report.md)）、**J1・J2 完了**（`web_js/` に JS版。14件表示・ズーム再取得・スライダー/再生・地点クリックの時系列。起動は `python3 -m http.server 8767 -d web_js`）。**J3: 公開オリジン(github.io)でのCORS確認済み・`render.yaml` 用意済み**。JS版の公開確認用URL: https://masauehr.github.io/jaxa_earth_viewer/js-version/ 。残りは Render ダッシュボードで Blueprint を作成するだけ（手順は [plan.md](plan.md) の 2.9）
+1. JavaScript版（JAXA Earth API v2.0.1）＋ Render 公開: **J0 検証完了・GO**（[docs/js_j0_report.md](docs/js_j0_report.md)）、**J1・J2 完了**（`web_js/` に JS版。14件表示・ズーム再取得・スライダー/再生・地点クリックの時系列。起動は `python3 -m http.server 8767 -d web_js`）。**J3 完了: Render で公開済み https://jaxa-earth-viewer.onrender.com/**（`render.yaml` の静的サイト。`web_js/**` の push で自動デプロイ）。次は J4（現行Python生成版の整理。[plan.md](plan.md) 参照）
 2. 追加データセット（夜間LST・夜間SMC・降水半月値ほか）
 3. 運用: 数日おきに `launchd.log` と Pages の更新を確認する
