@@ -15,16 +15,16 @@
   3000
  ],
  "extend": "max",
- "citation": "JAXA EORC ALOS World 3D (AW3D30) v3.2",
+ "citation": "Credit: AW3D30 (JAXA)",
  "colors": [
-  "#333399",
-  "#0393f9",
-  "#21d26c",
-  "#b5f08a",
-  "#dcd286",
-  "#92735e",
-  "#b5a09b",
-  "#ffffff"
+  "#ffffe5",
+  "#fef4b6",
+  "#feda7f",
+  "#feb13f",
+  "#f4821d",
+  "#d55607",
+  "#a13703",
+  "#662505"
  ],
  "width": 600,
  "height": 600,

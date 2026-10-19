@@ -34,9 +34,9 @@ def candidates(ds):
     if ds["freq"] == "static":
         return [date.fromisoformat(ds["static_date"])]
     if ds["freq"] == "daily":
-        return [today - timedelta(days=n) for n in range(2, 14)]
+        return [today - timedelta(days=n) for n in range(2, 26)]
     out, y, m = [], today.year, today.month  # monthly: 当月から遡る（月初日で指定）
-    for _ in range(12):
+    for _ in range(16):
         out.append(date(y, m, 1))
         y, m = (y, m - 1) if m > 1 else (y - 1, 12)
     return out
@@ -119,7 +119,17 @@ def write_index(ds):
     return meta
 
 
-def run(ds, days, n):
+def prune(ds, keep):
+    """保持件数を超えた古い日付のPNG・グリッドを削除する（このスクリプトが生成した日付ファイルのみ）"""
+    folder = OUT / ds['id']
+    dates = sorted(p.name.split('.')[0] for p in folder.glob('*.png'))
+    for old in dates[:-keep]:
+        for ext in ('.png', '.bin.gz'):
+            (folder / (old + ext)).unlink(missing_ok=True)
+        print('整理:', ds['id'], old)
+
+
+def run(ds, days, n, force=False):
     folder = OUT / ds["id"]
     folder.mkdir(parents=True, exist_ok=True)
     got = 0
@@ -128,11 +138,14 @@ def run(ds, days, n):
             break
         path = folder / f"{day}.png"
         grid = folder / f"{day}.bin.gz"
-        if path.exists() and grid.exists():  # 取得済みはスキップして件数に数える
+        if path.exists() and grid.exists() and not force:  # 取得済みはスキップして件数に数える
             got += 1
             continue
         arr = fetch(ds, day)
         if arr is None:
+            continue
+        if np.isnan(arr).all():  # ソース側の欠損フレーム（全面NaN）は保存しない
+            print("全面欠測のためスキップ:", ds["id"], day)
             continue
         Image.fromarray(colorize(ds, to_mercator(arr))).save(path)
         save_grid(grid, arr, ds["scale"])
@@ -140,6 +153,8 @@ def run(ds, days, n):
         (folder / "grid.json").write_text(json.dumps({"width": w, "height": h}))
         print("生成:", ds["id"], day, "NaN率 %.2f" % np.isnan(arr).mean())
         got += 1
+    if ds["freq"] != "static":
+        prune(ds, n)
     return write_index(ds)
 
 
@@ -147,14 +162,15 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("-d", "--dataset", help="データセットID（省略で全て）")
     ap.add_argument("--date", help="日付 YYYY-MM-DD（省略で最新から遡る）")
-    ap.add_argument("-n", type=int, default=3, help="保持する最新件数（既定3）")
+    ap.add_argument("-n", type=int, help="保持する最新件数（既定はデータセットごとのkeep）")
+    ap.add_argument("--force", action="store_true", help="取得済みの日付も再生成する")
     args = ap.parse_args()
     targets = [d for d in DATASETS if args.dataset in (None, d["id"])]
     if not targets:
         raise SystemExit("不明なデータセット: %s" % args.dataset)
     for ds in targets:
         days = [date.fromisoformat(args.date)] if args.date else candidates(ds)
-        run(ds, days, 1 if ds["freq"] == "static" else args.n)
+        run(ds, days, 1 if ds["freq"] == "static" else (args.n or ds["keep"]), args.force)
     # 全データセットの一覧（UIの切替用）。画像のあるものだけ載せる
     items = [json.loads((OUT / d["id"] / "index.json").read_text()) for d in DATASETS
              if (OUT / d["id"] / "index.json").exists()]

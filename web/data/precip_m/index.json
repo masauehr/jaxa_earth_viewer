@@ -16,7 +16,7 @@
   16
  ],
  "extend": "max",
- "citation": "Japan Aerospace Exploration Agency. 1998. GSMaP(Hourly). DOI:10.57746/EO.01gs73bkt358gfpy92y2qns5e9",
+ "citation": "Credit: GSMaP (JAXA). Japan Aerospace Exploration Agency. 1998. GSMaP(Monthly). DOI:10.57746/EO.01gs73bktym5xwr10j34rwqgj8",
  "colors": [
   "#30123b",
   "#4668e0",
@@ -43,6 +43,15 @@
  "scale": 1000,
  "normal": false,
  "dates": [
+  "2025-10-01",
+  "2025-11-01",
+  "2025-12-01",
+  "2026-01-01",
+  "2026-02-01",
+  "2026-03-01",
+  "2026-04-01",
+  "2026-05-01",
+  "2026-06-01",
   "2026-07-01",
   "2026-08-01",
   "2026-09-01"

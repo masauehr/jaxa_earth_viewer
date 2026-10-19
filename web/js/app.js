@@ -104,8 +104,13 @@ async function loadGrid(date) {
   const key = `${meta.id}/${date}`;
   if (!gridCache.has(key)) {
     const res = await fetch(`${DATA_DIR}${meta.id}/${date}.bin.gz`);
-    const ds = new Response(res.body.pipeThrough(new DecompressionStream("gzip")));
-    gridCache.set(key, new Int16Array(await ds.arrayBuffer()));
+    let buf = await res.arrayBuffer();
+    // サーバーが Content-Encoding: gzip を付けて転送時に解凍済みの場合は、先頭がgzipの印(1f 8b)ではない
+    const b = new Uint8Array(buf);
+    if (b[0] === 0x1f && b[1] === 0x8b) {
+      buf = await new Response(new Blob([buf]).stream().pipeThrough(new DecompressionStream("gzip"))).arrayBuffer();
+    }
+    gridCache.set(key, new Int16Array(buf));
   }
   return gridCache.get(key);
 }
