@@ -6,6 +6,8 @@ JAXA が提供する **JAXA Earth API**（STAC / COG ベース、Python版・Jav
 
 > 状態: Phase 4 完了・公開中（2026-10-19）。https://masauehr.github.io/jaxa_earth_viewer/ 。launchd で毎日 11:00/16:00 に自動更新。検証は [docs/phase0_report.md](docs/phase0_report.md)。
 
+> 今後の計画（追加データセット候補、JavaScript版＋Render公開の検討）は [plan.md](plan.md) を参照。
+
 ## 公開・運用（Phase 4）
 
 - **公開**: GitHub Pages（`.github/workflows/pages.yml` が `web/` をデプロイ）。https://masauehr.github.io/jaxa_earth_viewer/
@@ -128,6 +130,7 @@ jaxa_earth_viewer/
 
 ## 7. 次のアクション
 
-1. 運用: 数日おきに `launchd.log` と Pages の更新を確認する
-2. 追加データセット候補: 夜間の地表面温度・土壌水分、エアロゾル光学的厚さ(SGLI AROT)、蒸発散(JASMES ET)、Aqua/MODIS日射量。`scripts/datasets.py` に足すだけ（`offset` で単位換算、`normal` で平年差）
-3. JS版（方式A）の可否確認（現状は方式Bで十分動いているため優先度低）
+[plan.md](plan.md) に集約。要点:
+1. JavaScript版（JAXA Earth API v2.0.1）＋ Render 公開の検証 Phase J0（CORS・取得速度・平年差・最新日判定を確認して go/no-go を決める）
+2. 追加データセット（夜間LST・夜間SMC・降水半月値ほか）
+3. 運用: 数日おきに `launchd.log` と Pages の更新を確認する
