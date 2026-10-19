@@ -136,9 +136,17 @@ JavaScript 版（ブラウザが JAXA のデータを直接取得して描画す
 - 確認: 日射量の平年差の表示、クリックでの値と12か月の時系列グラフが Render 上で動作（`Cache-Control: public, max-age=0, s-maxage=300`。JS/CSSは `?v=` で更新を反映）。
 - 以後、`web_js/**` を変更して main に push すると Render が自動デプロイする。日次データ更新（`web/data`）の commit では再ビルドしない。
 
+### 2.11 J4 完了: Python生成版の廃止（2026-10-19）
+ユーザーの指示で実施。
+- launchd `com.user.jaxa_earth_viewer` を停止（`launchctl bootout`）し、`~/Library/LaunchAgents/` の plist を削除（控えは `scripts/com.user.jaxa_earth_viewer.plist`）。
+- `web/data`（347ファイル・約39MB）を `git rm` で削除し、`.gitignore` に `web/data/` を追加。Git の履歴にはデータが残る。
+- **GitHub Pages のルートを JS版（`web_js/`）に切り替え**（`web/data` を消すと Python版のページが表示できなくなるため）。以前の `/js-version/` は無くなり、ルートが JS版。
+- `web/`（画面のコード）と `scripts/` は履歴として残した（不要なら別途削除できる）。`scripts/daily_update.sh` には廃止の注記を追加。
+- JS版（Render・Pages）が引き続き動くことを確認する。
+
 ## 3. 次のアクション（提案）
 1. ~~J1~~ 完了（2.7）。
 2. ~~J2~~ 完了（2.8）。スマホ実機での確認が残る。
 3. ~~J3~~ 完了（2.10）。
-4. **J4（次）**: 現行（方式B: Python生成版・launchd日次更新・`web/data`）をどう整理するか決める。JS版が同等以上であることは確認済みなので、候補は ①Pages のルートを JS版に切り替え、Python版は縮退（フォールバック）として残す ②launchd 日次更新を停止し `web/data`（約39MB）を削除 ③README・pc_docs・memory の更新。**launchd 停止とデータ削除は元に戻しにくいので、実施前に確認する**。
+4. ~~J4~~ 完了（2.11）。
 5. 並行して、優先「高」のデータセット（夜間 LST・夜間 SMC・降水半月値）の追加は、JS版の定義 JSON に足す形で進められる。

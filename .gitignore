@@ -4,3 +4,5 @@ __pycache__/
 *.log
 .env
 .venv/
+# Python生成版の出力（2026-10-19 に廃止。再生成してもコミットしない）
+web/data/

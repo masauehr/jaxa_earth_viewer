@@ -4,16 +4,19 @@
 
 JAXA が提供する **JAXA Earth API**（STAC / COG ベース、Python版・JavaScript版あり）から衛星データを取得し、地図上に表示するプロダクト。
 
-> 状態: Phase 4 完了・公開中。**JS版（Render）: https://jaxa-earth-viewer.onrender.com/** ／ Python生成版（GitHub Pages）: https://masauehr.github.io/jaxa_earth_viewer/ 。Python生成版は launchd で毎日 11:00/16:00 に自動更新。検証は [docs/phase0_report.md](docs/phase0_report.md)。
+> 状態: **JS版に一本化（2026-10-19）**。公開は **Render: https://jaxa-earth-viewer.onrender.com/** と **GitHub Pages: https://masauehr.github.io/jaxa_earth_viewer/**（どちらも `web_js/`）。Python生成版（`web/`・`scripts/gen_overlay.py`・launchd日次更新・`web/data`）は廃止。検証は [docs/phase0_report.md](docs/phase0_report.md)。
 
 > 今後の計画（追加データセット候補、JavaScript版＋Render公開の検討）は [plan.md](plan.md) を参照。
 
-## 公開・運用（Phase 4）
+## 公開・運用（現行: JS版）
 
-- **公開**: GitHub Pages（`.github/workflows/pages.yml` が `web/` をデプロイ）。https://masauehr.github.io/jaxa_earth_viewer/
-- **日次更新**: launchd `com.user.jaxa_earth_viewer`（`scripts/com.user.jaxa_earth_viewer.plist` が控え。実体は `~/Library/LaunchAgents/`）が毎日 11:00 と 16:00 に `scripts/daily_update.sh` を実行 → データ生成 → 変更があれば commit/push → Pages が自動で再デプロイ。ログは `launchd.log`（git除外）
-  - 登録: `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.user.jaxa_earth_viewer.plist`／解除: `launchctl bootout gui/$(id -u)/com.user.jaxa_earth_viewer`
-- **保持期間**: 日別は直近14日、月別は直近12か月（`scripts/datasets.py` の `keep`）。超えた古い画像・グリッドは `gen_overlay.py` が自動で削除。全面欠測（ソース側の欠損）の日はスキップ。`--force` で取得済みの日付も再生成
+- **JS版**（`web_js/`）: JAXA Earth API for JavaScript v2.0.1 でブラウザが直接データを取得して描画する。サーバー・日次更新・データの蓄積は不要。起動（ローカル）: `python3 -m http.server 8767 -d web_js`。データセット定義は `web_js/js/datasets.json`。詳細は [plan.md](plan.md) の 2.7〜2.10。
+- **公開**: Render の静的サイト（`render.yaml`。`web_js/**` の push で自動デプロイ）と、GitHub Pages（`.github/workflows/pages.yml` が `web_js/` をルートに配信）。
+- **廃止（2026-10-19）**: Python生成版。launchd `com.user.jaxa_earth_viewer` を停止して登録解除し、`web/data`（約39MB・347ファイル）を削除した。`web/`（画面のコード）と `scripts/`（`gen_overlay.py`・`datasets.py`・`daily_update.sh`・plist の控え）は履歴として残す。**再開するなら** plist を `~/Library/LaunchAgents/` に置いて `launchctl bootstrap`、`.gitignore` の `web/data/` を外し、Pages のワークフローを `web/` 配信に戻す必要がある（Gitの履歴にはデータが残っている）。
+- 以下の「保持期間」「使い方」は Python生成版（廃止）の記録。
+
+### （参考）Python生成版の運用メモ
+
 - **データの利用条件（JAXA 地球観測データポリシー）**: 無償で利用・改変・再配布できる。条件は ①JAXAと研究名のクレジット表記（例: "Credit: GSMaP (JAXA)"）②JAXA以外の機関データを含む場合はその機関にも謝辞 ③**商用利用は事前にJAXAへ通知**。著作権はJAXAに帰属し、利用条件は予告なく変わる場合がある。本ビューアは個人の非商用公開で、画面右下の出典欄にクレジットを表示している
   - ポリシー原文: https://earth.jaxa.jp/en/data/policy/ 。各コレクションのSTACの `license` は `proprietary`（上記ポリシーへのリンク付き）
 
@@ -133,4 +136,4 @@ jaxa_earth_viewer/
 [plan.md](plan.md) に集約。要点:
 1. JavaScript版（JAXA Earth API v2.0.1）＋ Render 公開: **J0 検証完了・GO**（[docs/js_j0_report.md](docs/js_j0_report.md)）、**J1・J2 完了**（`web_js/` に JS版。14件表示・ズーム再取得・スライダー/再生・地点クリックの時系列。起動は `python3 -m http.server 8767 -d web_js`）。**J3 完了: Render で公開済み https://jaxa-earth-viewer.onrender.com/**（`render.yaml` の静的サイト。`web_js/**` の push で自動デプロイ）。次は J4（現行Python生成版の整理。[plan.md](plan.md) 参照）
 2. 追加データセット（夜間LST・夜間SMC・降水半月値ほか）
-3. 運用: 数日おきに `launchd.log` と Pages の更新を確認する
+3. 運用: Render の稼働と、JAXA 側のデータ更新（最新日が進むこと）を時々確認する。JS版は日次更新が不要

@@ -1,4 +1,5 @@
 #!/bin/bash
+# [廃止 2026-10-19] launchd の日次更新は停止済み（JS版に移行）。再開するなら plist を ~/Library/LaunchAgents に置き、web/data の .gitignore を外すこと。
 # 日次更新: データ生成 → 変更があれば commit/push（GitHub Pages は push で自動デプロイされる）
 set -u
 cd "$(dirname "$0")/.." || exit 1
