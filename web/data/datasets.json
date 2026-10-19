@@ -22,5 +22,37 @@
  {
   "id": "dsm",
   "label": "標高 DSM（ALOS AW3D30）"
+ },
+ {
+  "id": "swr",
+  "label": "日射量（JASMES・Terra/MODIS・月平均）"
+ },
+ {
+  "id": "swr_diff",
+  "label": "日射量の平年差（月平均−平年）"
+ },
+ {
+  "id": "smc",
+  "label": "土壌水分（GCOM-W/AMSR2・月平均・昼）"
+ },
+ {
+  "id": "smc_diff",
+  "label": "土壌水分の平年差（月平均−平年）"
+ },
+ {
+  "id": "lst",
+  "label": "地表面温度（GCOM-C/SGLI・月平均・昼）"
+ },
+ {
+  "id": "lst_diff",
+  "label": "地表面温度の平年差（月平均−平年）"
+ },
+ {
+  "id": "chla",
+  "label": "クロロフィルa（GCOM-C/SGLI・月平均）"
+ },
+ {
+  "id": "ssw",
+  "label": "海上風速（GCOM-W/AMSR2・月平均・昼）"
  }
 ]

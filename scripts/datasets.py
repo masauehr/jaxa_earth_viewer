@@ -1,6 +1,8 @@
 """表示するデータセットの定義（コレクションID・バンド・配色・階級）"""
 
 SGLI = "JAXA.G-Portal_GCOM-C.SGLI_standard."
+GP = "JAXA.G-Portal_"
+JASMES = "JAXA.JASMES_"
 GSMAP = "JAXA.EORC_GSMaP_standard.Gauge.00Z-23Z.v6_"
 
 DATASETS = [
@@ -54,5 +56,74 @@ DATASETS = [
         "levels": [1, 100, 300, 500, 1000, 1500, 2000, 3000],
         "cmap": "YlOrBr", "extend": "max",  # 1m未満（海）は透明
         "citation": "Credit: AW3D30 (JAXA)",
+    },
+    # ---- 以下 2026-10-19 追加 ----
+    {
+        "id": "swr", "label": "日射量（JASMES・Terra/MODIS・月平均）",
+        "collection": JASMES + "Terra.MODIS_swr.v811_global_monthly", "band": "swr",
+        "ppu": 20, "scale": 100, "freq": "monthly", "keep": 12, "unit": "W/m²（地表面下向き短波放射）",
+        "levels": [60, 100, 140, 180, 220, 260, 300],
+        "cmap": "YlOrRd", "extend": "both",
+        "citation": "Credit: JASMES (JAXA/NASA) Terra/MODIS 短波放射",
+    },
+    {
+        "id": "swr_diff", "label": "日射量の平年差（月平均−平年）",
+        "collection": JASMES + "Terra.MODIS_swr.v811_global_monthly", "band": "swr",
+        "normal": {"collection": JASMES + "Terra.MODIS_swr.v811_global_monthly-normal", "band": "swr_2012_2021"},
+        "ppu": 20, "scale": 100, "freq": "monthly", "keep": 12, "unit": "W/m²（平年差。紫=少 橙=多）",
+        "levels": [-40, -20, -10, -5, 5, 10, 20, 40],
+        "cmap": "PuOr_r", "extend": "both",
+        "citation": "Credit: JASMES (JAXA/NASA) Terra/MODIS 短波放射。平年は2012〜2021年",
+    },
+    {
+        "id": "smc", "label": "土壌水分（GCOM-W/AMSR2・月平均・昼）",
+        "collection": GP + "GCOM-W.AMSR2_standard.L3-SMC.daytime.v3_global_monthly", "band": "SMC",
+        "ppu": 10, "scale": 100, "freq": "monthly", "keep": 12, "unit": "%（体積含水率）",
+        "levels": [0, 5, 10, 15, 20, 30, 40],
+        "cmap": "YlGnBu", "extend": "max",
+        "citation": "Credit: GCOM-W/AMSR2 (JAXA)",
+    },
+    {
+        "id": "smc_diff", "label": "土壌水分の平年差（月平均−平年）",
+        "collection": GP + "GCOM-W.AMSR2_standard.L3-SMC.daytime.v3_global_monthly", "band": "SMC",
+        "normal": {"collection": GP + "GCOM-W.AMSR2_standard.L3-SMC.daytime.v3_global_monthly-normal", "band": "SMC_2012_2021"},
+        "ppu": 10, "scale": 100, "freq": "monthly", "keep": 12, "unit": "%（平年差。茶=乾燥 青緑=湿潤）",
+        "levels": [-10, -5, -2, -1, 1, 2, 5, 10],
+        "cmap": "BrBG", "extend": "both",
+        "citation": "Credit: GCOM-W/AMSR2 (JAXA)。平年は2012〜2021年",
+    },
+    {
+        "id": "lst", "label": "地表面温度（GCOM-C/SGLI・月平均・昼）",
+        "collection": GP + "GCOM-C.SGLI_standard.L3-LST.daytime.v3_global_monthly", "band": "LST",
+        "ppu": 20, "scale": 100, "offset": -273.15,  # 元データはK。℃に換算する
+        "freq": "monthly", "keep": 12, "unit": "℃",
+        "levels": [0, 5, 10, 15, 20, 25, 30, 35, 40],
+        "cmap": "turbo", "extend": "both",
+        "citation": "Credit: GCOM-C/SGLI (JAXA)",
+    },
+    {
+        "id": "lst_diff", "label": "地表面温度の平年差（月平均−平年）",
+        "collection": GP + "GCOM-C.SGLI_standard.L3-LST.daytime.v3_global_monthly", "band": "LST",
+        "normal": {"collection": JASMES + "GCOM-C.SGLI_standard.L3-LST.daytime.v3_global_monthly-normal", "band": "LST_2000_2022"},
+        "ppu": 20, "scale": 100, "freq": "monthly", "keep": 12, "unit": "℃（平年差。青=低 赤=高）",
+        "levels": [-4, -2, -1, -0.5, 0.5, 1, 2, 4],
+        "cmap": "RdBu_r", "extend": "both",
+        "citation": "Credit: GCOM-C/SGLI (JAXA)。平年は2000〜2022年（JASMES）",
+    },
+    {
+        "id": "chla", "label": "クロロフィルa（GCOM-C/SGLI・月平均）",
+        "collection": GP + "GCOM-C.SGLI_standard.L3-CHLA.daytime.v3_global_monthly", "band": "CHLA",
+        "ppu": 20, "scale": 1000, "freq": "monthly", "keep": 12, "unit": "mg/m³",
+        "levels": [0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10],
+        "cmap": "viridis", "extend": "both",
+        "citation": "Credit: GCOM-C/SGLI (JAXA)",
+    },
+    {
+        "id": "ssw", "label": "海上風速（GCOM-W/AMSR2・月平均・昼）",
+        "collection": GP + "GCOM-W.AMSR2_standard.L3-SSW.daytime.v4_global_monthly", "band": "SSW",
+        "ppu": 10, "scale": 100, "freq": "monthly", "keep": 12, "unit": "m/s",
+        "levels": [2, 4, 5, 6, 7, 8, 10, 12],
+        "cmap": "GnBu", "extend": "both",
+        "citation": "Credit: GCOM-W/AMSR2 (JAXA)",
     },
 ]

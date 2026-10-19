@@ -1,0 +1,55 @@
+{
+ "id": "smc",
+ "label": "土壌水分（GCOM-W/AMSR2・月平均・昼）",
+ "collection": "JAXA.G-Portal_GCOM-W.AMSR2_standard.L3-SMC.daytime.v3_global_monthly",
+ "band": "SMC",
+ "unit": "%（体積含水率）",
+ "levels": [
+  0,
+  5,
+  10,
+  15,
+  20,
+  30,
+  40
+ ],
+ "extend": "max",
+ "citation": "Credit: GCOM-W/AMSR2 (JAXA)",
+ "colors": [
+  "#ffffd9",
+  "#e0f3b1",
+  "#97d6b8",
+  "#41b6c3",
+  "#1e80b8",
+  "#23429a",
+  "#081d58"
+ ],
+ "width": 300,
+ "height": 300,
+ "bounds": [
+  [
+   20,
+   120
+  ],
+  [
+   50,
+   150
+  ]
+ ],
+ "scale": 100,
+ "normal": false,
+ "dates": [
+  "2025-10-01",
+  "2025-11-01",
+  "2025-12-01",
+  "2026-01-01",
+  "2026-02-01",
+  "2026-03-01",
+  "2026-04-01",
+  "2026-05-01",
+  "2026-06-01",
+  "2026-07-01",
+  "2026-08-01",
+  "2026-09-01"
+ ]
+}

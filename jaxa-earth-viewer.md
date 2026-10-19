@@ -33,7 +33,18 @@ python3 -m http.server 8765 -d web   # → http://localhost:8765/
 - `scripts/datasets.py`: データセット定義（コレクションID・バンド・解像度・配色・階級）。追加はここに1件足すだけ
 - `scripts/gen_overlay.py`: 取得 → Webメルカトル補正 → 階級配色の透過PNG（`web/data/<id>/`）と `index.json`（凡例・出典）、`web/data/datasets.json` を生成。未公開の日・月は遡って取得
 - `web/`: Vanilla JS + Leaflet（背景は国土地理院タイル）。データセット切替・日付選択・前後ボタン・透過度・凡例・選択中データの出典表示。`?ds=sst` で初期データセットを指定可
-- 表示データ: 降水(GSMaP日/月・mm/h) / **降水の平年差**(月平均−2012〜2021平年) / 海面水温(SGLI月・昼・℃) / NDVI(SGLI月) / 標高(AW3D30・静的)
+- 表示データ（14件。2026-10-19 に8件追加）:
+  | 種別 | データ | 平年差 |
+  |---|---|---|
+  | 降水 | GSMaP 日(mm/h)・月 | 月（2012〜2021平年） |
+  | 日射量 | JASMES Terra/MODIS 月平均（W/m²） | あり（2012〜2021平年） |
+  | 土壌水分 | GCOM-W/AMSR2 月平均・昼（%） | あり（2012〜2021平年） |
+  | 地表面温度 | GCOM-C/SGLI 月平均・昼（℃。元データはK） | あり（2000〜2022平年・JASMES） |
+  | 海面水温 | GCOM-C/SGLI 月平均・昼（℃） | なし（同一プロダクトの平年値が無い） |
+  | 植生 | NDVI（GCOM-C/SGLI 月） | なし（平年値はMODIS由来で別プロダクト） |
+  | クロロフィルa | GCOM-C/SGLI 月平均（mg/m³） | なし |
+  | 海上風速 | GCOM-W/AMSR2 月平均・昼（m/s） | なし |
+  | 標高 | AW3D30（静的） | - |
 - 時系列: スライダーと再生ボタン（1.2秒/コマ）で日付を送る
 - 地点クリック: その地点の値と、保持している全日付の折れ線グラフ（横軸は日付に比例）をポップアップ表示。値は `web/data/<id>/<日付>.bin.gz`（Int16×scale・gzip・北→南/西→東）をブラウザで解凍して読む
 - 平年差: 平年値コレクション（`*-normal`）は年に依存しない。SGLIのSST/NDVIには同一センサーの平年値がなく、差分は降水のみ（NDVIの平年はMODIS由来で別プロダクトのため不採用）
@@ -118,5 +129,5 @@ jaxa_earth_viewer/
 ## 7. 次のアクション
 
 1. 運用: 数日おきに `launchd.log` と Pages の更新を確認する
-2. 追加データセット（例: 土壌水分 AMSR2 SMC とその平年差、地表面温度 SGLI LST）を `scripts/datasets.py` に足す
+2. 追加データセット候補: 夜間の地表面温度・土壌水分、エアロゾル光学的厚さ(SGLI AROT)、蒸発散(JASMES ET)、Aqua/MODIS日射量。`scripts/datasets.py` に足すだけ（`offset` で単位換算、`normal` で平年差）
 3. JS版（方式A）の可否確認（現状は方式Bで十分動いているため優先度低）

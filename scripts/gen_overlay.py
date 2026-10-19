@@ -56,6 +56,8 @@ def fetch(ds, day):
         arr = fetch_one(ds["collection"], ds["band"], ds["ppu"], day)
         if "normal" in ds:  # 平年値コレクションは年に依存しないので同じ日付で取得できる
             arr = arr - fetch_one(ds["normal"]["collection"], ds["normal"]["band"], ds["ppu"], day)
+        else:
+            arr = arr + ds.get("offset", 0)  # 単位換算（例: K→℃）。差分は換算不要
         return arr
     except Exception as e:  # 未公開日などは例外になる
         print("取得失敗", ds["id"], day, type(e).__name__, e)

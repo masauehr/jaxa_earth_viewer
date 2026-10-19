@@ -1,0 +1,58 @@
+{
+ "id": "chla",
+ "label": "クロロフィルa（GCOM-C/SGLI・月平均）",
+ "collection": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-CHLA.daytime.v3_global_monthly",
+ "band": "CHLA",
+ "unit": "mg/m³",
+ "levels": [
+  0.05,
+  0.1,
+  0.2,
+  0.5,
+  1,
+  2,
+  5,
+  10
+ ],
+ "extend": "both",
+ "citation": "Credit: GCOM-C/SGLI (JAXA)",
+ "colors": [
+  "#440154",
+  "#472b7a",
+  "#3b518a",
+  "#2c718e",
+  "#208f8c",
+  "#27ad80",
+  "#5bc862",
+  "#aadb32",
+  "#fde724"
+ ],
+ "width": 600,
+ "height": 600,
+ "bounds": [
+  [
+   20,
+   120
+  ],
+  [
+   50,
+   150
+  ]
+ ],
+ "scale": 1000,
+ "normal": false,
+ "dates": [
+  "2025-10-01",
+  "2025-11-01",
+  "2025-12-01",
+  "2026-01-01",
+  "2026-02-01",
+  "2026-03-01",
+  "2026-04-01",
+  "2026-05-01",
+  "2026-06-01",
+  "2026-07-01",
+  "2026-08-01",
+  "2026-09-01"
+ ]
+}
