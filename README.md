@@ -131,6 +131,6 @@ jaxa_earth_viewer/
 ## 7. 次のアクション
 
 [plan.md](plan.md) に集約。要点:
-1. JavaScript版（JAXA Earth API v2.0.1）＋ Render 公開の検証 Phase J0（CORS・取得速度・平年差・最新日判定を確認して go/no-go を決める）
+1. JavaScript版（JAXA Earth API v2.0.1）＋ Render 公開: **J0 検証完了・GO**（[docs/js_j0_report.md](docs/js_j0_report.md)）。次は J1（`web_js/` に骨組み）
 2. 追加データセット（夜間LST・夜間SMC・降水半月値ほか）
 3. 運用: 数日おきに `launchd.log` と Pages の更新を確認する
