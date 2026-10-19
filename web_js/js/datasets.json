@@ -1,0 +1,456 @@
+[
+ {
+  "id": "precip",
+  "label": "降水（GSMaP・日平均）",
+  "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_GSMaP_standard.Gauge.00Z-23Z.v6_daily/collection.json",
+  "band": "PRECIP",
+  "unit": "mm/h（日平均）",
+  "levels": [
+   0.05,
+   0.1,
+   0.25,
+   0.5,
+   1,
+   2,
+   4,
+   8,
+   16
+  ],
+  "extend": "max",
+  "colors": [
+   "#30123b",
+   "#4668e0",
+   "#2ab9ed",
+   "#2ff09a",
+   "#a1fc3d",
+   "#ecd139",
+   "#fb8022",
+   "#d23005",
+   "#7a0402"
+  ],
+  "citation": "Credit: GSMaP (JAXA). Japan Aerospace Exploration Agency. 1998. GSMaP(Hourly). DOI:10.57746/EO.01gs73bkt358gfpy92y2qns5e9",
+  "freq": "daily"
+ },
+ {
+  "id": "precip_m",
+  "label": "降水（GSMaP・月平均）",
+  "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_GSMaP_standard.Gauge.00Z-23Z.v6_monthly/collection.json",
+  "band": "PRECIP",
+  "unit": "mm/h（月平均）",
+  "levels": [
+   0.05,
+   0.1,
+   0.25,
+   0.5,
+   1,
+   2,
+   4,
+   8,
+   16
+  ],
+  "extend": "max",
+  "colors": [
+   "#30123b",
+   "#4668e0",
+   "#2ab9ed",
+   "#2ff09a",
+   "#a1fc3d",
+   "#ecd139",
+   "#fb8022",
+   "#d23005",
+   "#7a0402"
+  ],
+  "citation": "Credit: GSMaP (JAXA). Japan Aerospace Exploration Agency. 1998. GSMaP(Monthly). DOI:10.57746/EO.01gs73bktym5xwr10j34rwqgj8",
+  "freq": "monthly"
+ },
+ {
+  "id": "precip_m_diff",
+  "label": "降水の平年差（GSMaP・月平均−平年）",
+  "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_GSMaP_standard.Gauge.00Z-23Z.v6_monthly/collection.json",
+  "band": "PRECIP",
+  "unit": "mm/h（平年差。茶=少 青緑=多）",
+  "levels": [
+   -2,
+   -1,
+   -0.5,
+   -0.1,
+   0.1,
+   0.5,
+   1,
+   2
+  ],
+  "extend": "both",
+  "colors": [
+   "#543005",
+   "#975b11",
+   "#ce9f52",
+   "#efddaf",
+   "#f5f4f4",
+   "#b6e3dc",
+   "#5bb2a8",
+   "#0e726a",
+   "#003c30"
+  ],
+  "citation": "Credit: GSMaP (JAXA)。平年は2012〜2021年。Japan Aerospace Exploration Agency. 1998. GSMaP(Monthly). DOI:10.57746/EO.01gs73bktym5xwr10j34rwqgj8",
+  "freq": "monthly",
+  "normal": {
+   "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_GSMaP_standard.Gauge.00Z-23Z.v6_monthly-normal/collection.json",
+   "band": "PRECIP_2012_2021"
+  }
+ },
+ {
+  "id": "sst",
+  "label": "海面水温（GCOM-C/SGLI・月平均・昼）",
+  "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly/collection.json",
+  "band": "SST",
+  "unit": "℃",
+  "levels": [
+   0,
+   5,
+   10,
+   15,
+   20,
+   24,
+   26,
+   28,
+   30
+  ],
+  "extend": "both",
+  "colors": [
+   "#30123b",
+   "#4560d6",
+   "#36a8f9",
+   "#1ae4b6",
+   "#71fd5f",
+   "#c5ef33",
+   "#f9ba38",
+   "#f66b18",
+   "#cb2b03",
+   "#7a0402"
+  ],
+  "citation": "Credit: GCOM-C/SGLI (JAXA)",
+  "freq": "monthly"
+ },
+ {
+  "id": "ndvi",
+  "label": "植生指数 NDVI（GCOM-C/SGLI・月）",
+  "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-C.SGLI_standard.L3-NDVI.daytime.v3_global_monthly/collection.json",
+  "band": "NDVI",
+  "unit": "NDVI（-）",
+  "levels": [
+   0,
+   0.1,
+   0.2,
+   0.3,
+   0.4,
+   0.5,
+   0.6,
+   0.7,
+   0.8
+  ],
+  "extend": "both",
+  "colors": [
+   "#ffffe5",
+   "#f7fcbe",
+   "#e0f2a8",
+   "#bbe395",
+   "#90d082",
+   "#60ba6d",
+   "#379e54",
+   "#1b7e40",
+   "#006435",
+   "#004529"
+  ],
+  "citation": "Credit: GCOM-C/SGLI (JAXA)",
+  "freq": "monthly"
+ },
+ {
+  "id": "dsm",
+  "label": "標高 DSM（ALOS AW3D30）",
+  "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_ALOS.PRISM_AW3D30.v3.2_global/collection.json",
+  "band": "DSM",
+  "unit": "m",
+  "levels": [
+   1,
+   100,
+   300,
+   500,
+   1000,
+   1500,
+   2000,
+   3000
+  ],
+  "extend": "max",
+  "colors": [
+   "#ffffe5",
+   "#fef4b6",
+   "#feda7f",
+   "#feb13f",
+   "#f4821d",
+   "#d55607",
+   "#a13703",
+   "#662505"
+  ],
+  "citation": "Credit: AW3D30 (JAXA)",
+  "freq": "static",
+  "staticDate": "2021-02-01"
+ },
+ {
+  "id": "swr",
+  "label": "日射量（JASMES・Terra/MODIS・月平均）",
+  "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly/collection.json",
+  "band": "swr",
+  "unit": "W/m²（地表面下向き短波放射）",
+  "levels": [
+   60,
+   100,
+   140,
+   180,
+   220,
+   260,
+   300
+  ],
+  "extend": "both",
+  "colors": [
+   "#ffffcc",
+   "#feea9a",
+   "#fece6b",
+   "#fda245",
+   "#fc6a32",
+   "#ea2920",
+   "#c30424",
+   "#800026"
+  ],
+  "citation": "Credit: JASMES (JAXA/NASA) Terra/MODIS 短波放射",
+  "freq": "monthly"
+ },
+ {
+  "id": "swr_diff",
+  "label": "日射量の平年差（月平均−平年）",
+  "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly/collection.json",
+  "band": "swr",
+  "unit": "W/m²（平年差。紫=少 橙=多）",
+  "levels": [
+   -40,
+   -20,
+   -10,
+   -5,
+   5,
+   10,
+   20,
+   40
+  ],
+  "extend": "both",
+  "colors": [
+   "#2d004b",
+   "#5d378f",
+   "#978dbd",
+   "#cdcde4",
+   "#f6f6f6",
+   "#fdd6a2",
+   "#ee9d3c",
+   "#be6209",
+   "#7f3b08"
+  ],
+  "citation": "Credit: JASMES (JAXA/NASA) Terra/MODIS 短波放射。平年は2012〜2021年",
+  "freq": "monthly",
+  "normal": {
+   "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly-normal/collection.json",
+   "band": "swr_2012_2021"
+  }
+ },
+ {
+  "id": "smc",
+  "label": "土壌水分（GCOM-W/AMSR2・月平均・昼）",
+  "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-W.AMSR2_standard.L3-SMC.daytime.v3_global_monthly/collection.json",
+  "band": "SMC",
+  "unit": "%（体積含水率）",
+  "levels": [
+   0,
+   5,
+   10,
+   15,
+   20,
+   30,
+   40
+  ],
+  "extend": "max",
+  "colors": [
+   "#ffffd9",
+   "#e0f3b1",
+   "#97d6b8",
+   "#41b6c3",
+   "#1e80b8",
+   "#23429a",
+   "#081d58"
+  ],
+  "citation": "Credit: GCOM-W/AMSR2 (JAXA)",
+  "freq": "monthly"
+ },
+ {
+  "id": "smc_diff",
+  "label": "土壌水分の平年差（月平均−平年）",
+  "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-W.AMSR2_standard.L3-SMC.daytime.v3_global_monthly/collection.json",
+  "band": "SMC",
+  "unit": "%（平年差。茶=乾燥 青緑=湿潤）",
+  "levels": [
+   -10,
+   -5,
+   -2,
+   -1,
+   1,
+   2,
+   5,
+   10
+  ],
+  "extend": "both",
+  "colors": [
+   "#543005",
+   "#975b11",
+   "#ce9f52",
+   "#efddaf",
+   "#f5f4f4",
+   "#b6e3dc",
+   "#5bb2a8",
+   "#0e726a",
+   "#003c30"
+  ],
+  "citation": "Credit: GCOM-W/AMSR2 (JAXA)。平年は2012〜2021年",
+  "freq": "monthly",
+  "normal": {
+   "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-W.AMSR2_standard.L3-SMC.daytime.v3_global_monthly-normal/collection.json",
+   "band": "SMC_2012_2021"
+  }
+ },
+ {
+  "id": "lst",
+  "label": "地表面温度（GCOM-C/SGLI・月平均・昼）",
+  "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-C.SGLI_standard.L3-LST.daytime.v3_global_monthly/collection.json",
+  "band": "LST",
+  "unit": "℃",
+  "levels": [
+   0,
+   5,
+   10,
+   15,
+   20,
+   25,
+   30,
+   35,
+   40
+  ],
+  "extend": "both",
+  "colors": [
+   "#30123b",
+   "#4560d6",
+   "#36a8f9",
+   "#1ae4b6",
+   "#71fd5f",
+   "#c5ef33",
+   "#f9ba38",
+   "#f66b18",
+   "#cb2b03",
+   "#7a0402"
+  ],
+  "citation": "Credit: GCOM-C/SGLI (JAXA)",
+  "freq": "monthly",
+  "convert": "K2C"
+ },
+ {
+  "id": "lst_diff",
+  "label": "地表面温度の平年差（月平均−平年）",
+  "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-C.SGLI_standard.L3-LST.daytime.v3_global_monthly/collection.json",
+  "band": "LST",
+  "unit": "℃（平年差。青=低 赤=高）",
+  "levels": [
+   -4,
+   -2,
+   -1,
+   -0.5,
+   0.5,
+   1,
+   2,
+   4
+  ],
+  "extend": "both",
+  "colors": [
+   "#053061",
+   "#286fb0",
+   "#68aacf",
+   "#bfdceb",
+   "#f6f6f6",
+   "#faceb6",
+   "#e58368",
+   "#bb2a33",
+   "#67001f"
+  ],
+  "citation": "Credit: GCOM-C/SGLI (JAXA)。平年は2000〜2022年（JASMES）",
+  "freq": "monthly",
+  "normal": {
+   "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds2/cog/v1/JAXA.JASMES_GCOM-C.SGLI_standard.L3-LST.daytime.v3_global_monthly-normal/collection.json",
+   "band": "LST_2000_2022"
+  }
+ },
+ {
+  "id": "chla",
+  "label": "クロロフィルa（GCOM-C/SGLI・月平均）",
+  "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-C.SGLI_standard.L3-CHLA.daytime.v3_global_monthly/collection.json",
+  "band": "CHLA",
+  "unit": "mg/m³",
+  "levels": [
+   0.05,
+   0.1,
+   0.2,
+   0.5,
+   1,
+   2,
+   5,
+   10
+  ],
+  "extend": "both",
+  "colors": [
+   "#440154",
+   "#472b7a",
+   "#3b518a",
+   "#2c718e",
+   "#208f8c",
+   "#27ad80",
+   "#5bc862",
+   "#aadb32",
+   "#fde724"
+  ],
+  "citation": "Credit: GCOM-C/SGLI (JAXA)",
+  "freq": "monthly"
+ },
+ {
+  "id": "ssw",
+  "label": "海上風速（GCOM-W/AMSR2・月平均・昼）",
+  "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-W.AMSR2_standard.L3-SSW.daytime.v4_global_monthly/collection.json",
+  "band": "SSW",
+  "unit": "m/s",
+  "levels": [
+   2,
+   4,
+   5,
+   6,
+   7,
+   8,
+   10,
+   12
+  ],
+  "extend": "both",
+  "colors": [
+   "#f7fcf0",
+   "#e0f3db",
+   "#ccebc5",
+   "#a8ddb5",
+   "#7bccc3",
+   "#4eb3d2",
+   "#2b8cbe",
+   "#0868ac",
+   "#084081"
+  ],
+  "citation": "Credit: GCOM-W/AMSR2 (JAXA)",
+  "freq": "monthly"
+ }
+]

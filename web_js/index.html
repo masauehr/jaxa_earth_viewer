@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JAXA Earth 衛星データビューア（JS版）</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="css/style.css?v=1">
+</head>
+<body>
+  <div id="map"></div>
+  <div id="panel">
+    <select id="dataset" aria-label="データセット"></select>
+    <div class="row">
+      <button id="prev" aria-label="前の日">◀</button>
+      <select id="date" aria-label="日付"></select>
+      <button id="next" aria-label="次の日">▶</button>
+    </div>
+    <label class="row">透過度 <input type="range" id="opacity" min="0.1" max="1" step="0.05" value="0.8"></label>
+    <div id="legend"></div>
+    <div id="status" aria-live="polite"></div>
+  </div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script type="module" src="js/app.js?v=1"></script>
+</body>
+</html>

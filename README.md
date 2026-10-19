@@ -131,6 +131,6 @@ jaxa_earth_viewer/
 ## 7. 次のアクション
 
 [plan.md](plan.md) に集約。要点:
-1. JavaScript版（JAXA Earth API v2.0.1）＋ Render 公開: **J0 検証完了・GO**（[docs/js_j0_report.md](docs/js_j0_report.md)）。次は J1（`web_js/` に骨組み）
+1. JavaScript版（JAXA Earth API v2.0.1）＋ Render 公開: **J0 検証完了・GO**（[docs/js_j0_report.md](docs/js_j0_report.md)）、**J1 完了**（`web_js/` に骨組み。14件表示可。起動は `python3 -m http.server 8767 -d web_js`）。次は J2（スライダー・時系列・ズーム再取得）
 2. 追加データセット（夜間LST・夜間SMC・降水半月値ほか）
 3. 運用: 数日おきに `launchd.log` と Pages の更新を確認する
