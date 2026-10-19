@@ -92,7 +92,7 @@ JavaScript 版（ブラウザが JAXA のデータを直接取得して描画す
 | J0 ✅ | 検証（最小HTML） | `web_js/j0.html` で CORS・取得速度・Python版との一致・平年差・最新日・値の読み取りを確認し、**GO** と判断（2026-10-19）。[docs/js_j0_report.md](docs/js_j0_report.md) |
 | J1 ✅ | データセット定義の移植 | `scripts/datasets.py` 相当を JSON（または JS）に。階級配色・凡例・出典・`offset`/平年差を `ColorMap` と `compute` で再現。既存14件のうち主要5件で見た目が現行と一致 |
 | J2 ✅ | UI の移植 | データセット／日付選択、スライダー・再生、透過度、凡例、出典（現行の `web/js/app.js` を土台）。地点クリックの値・時系列（`getDataObject` の値、または時系列サンプルを使用） |
-| J3 | Render 公開 | `render.yaml` を置き、Static Site（CORS 次第で Web Service）としてデプロイ。公開URLで全データセットの表示を確認 |
+| J3 🔶 | Render 公開（CORS確認・render.yaml 済み／Render 作成は未） | `render.yaml` を置き、Static Site（CORS 次第で Web Service）としてデプロイ。公開URLで全データセットの表示を確認 |
 | J4 | 切り替え・整理 | JS 版が現行（方式B）と同等以上になった時点で、launchd 停止・`web/data` の削除（またはフォールバック用に縮小）。README・pc_docs を更新 |
 
 **方式B（Python 生成）は J3 まで維持する**。JS 版が上回るまで現行の公開と日次更新は止めない。
@@ -120,8 +120,18 @@ JavaScript 版（ブラウザが JAXA のデータを直接取得して描画す
 - **未確認**: スマホ幅の見た目（Chrome のウィンドウ縮小ではビューポートが変わらず確認できなかった。CSS は現行版と同じメディアクエリ）。公開オリジンでの動作（J3）。
 - **残る負荷**: 1600px の取得は1.2〜2.1秒（海面水温は元解像度が細かく重め）。連続操作には負荷があるため、必要なら `MAX_W` を下げる。
 
+### 2.9 J3 の進捗（2026-10-19）
+- **公開オリジンでの CORS 確認: 完了**。Pages のワークフローを拡張し、JS版を https://masauehr.github.io/jaxa_earth_viewer/js-version/ に同居させて（`web/` は従来どおり `/`）、`github.io` のオリジンから JAXA のデータ置き場へ直接取得・描画できることを確認（降水の平年差・地表面温度の平年差・クリックの時系列）。CORS ヘッダーが `*` のため、Render のオリジンでも同様に通る見込み。
+- **スマホ幅（406px）の確認**: 表示・凡例・操作は問題なし。ポップアップがパネルの裏に隠れる問題を見つけ、自動パンの余白（パネルの下端）を取るよう両版を修正。
+- **`render.yaml` を用意**（[render.yaml](render.yaml)。静的サイト・`staticPublishPath: ./web_js`・`buildCommand: echo no build`・`buildFilter` で `web_js/**` と `render.yaml` のみ。日次データ更新の commit では再ビルドしない）。Render の仕様上、静的サイトに `plan` は指定しない。**Blueprint の構文は Render CLI での検証をしていない**（CLI 未導入）。
+- **Render へのデプロイは未実施**。サービスの作成は Render ダッシュボードでのアカウント認証が要るため、ユーザー操作が必要:
+  1. https://dashboard.render.com/ → **New → Blueprint** → GitHub の `masauehr/jaxa_earth_viewer` を選択
+  2. `render.yaml` が読み込まれ、静的サイト `jaxa-earth-viewer` が作成される → **Apply**
+  3. 発行された `https://jaxa-earth-viewer-xxxx.onrender.com/` で全データセットの表示を確認する（確認済みの github.io と同じ挙動のはず）。`buildFilter` の書式でエラーが出たら、そのメッセージを見て調整する
+- 静的サイトの無料枠（帯域・パイプライン分の月間枠。具体的な上限値は公式ドキュメントに数値の記載なし）はダッシュボードの請求ページで確認する。
+
 ## 3. 次のアクション（提案）
 1. ~~J1~~ 完了（2.7）。
 2. ~~J2~~ 完了（2.8）。スマホ実機での確認が残る。
-3. **J3**: `render.yaml`（Static Site）を置いてデプロイし、公開オリジンで CORS を確認する。**デプロイは公開操作なので実施前にユーザー確認を取る**。Render のアカウント・無料プランの制限を公式ドキュメントで確認してから行う。
+3. **J3**: 公開オリジンの CORS は確認済み・`render.yaml` は用意済み（2.9）。**残りは Render ダッシュボードでの Blueprint 作成（ユーザー操作）** と、Render の URL での表示確認。
 4. 並行して、優先「高」のデータセット（夜間 LST・夜間 SMC・降水半月値）の追加は、JS版の定義 JSON に足す形で進められる。

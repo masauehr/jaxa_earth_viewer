@@ -154,6 +154,12 @@ function chartSvg(dates, values) {
     <text class="axis" x="${W - m.r}" y="${H - 6}" text-anchor="end">${dates[dates.length - 1]}</text></svg>`;
 }
 
+// スマホ幅ではパネルが画面上部を覆うため、ポップアップがその裏に隠れないように自動パンの余白を取る
+function popupOptions() {
+  const covered = window.innerWidth <= 480 ? Math.ceil(document.getElementById("panel").getBoundingClientRect().bottom) + 10 : 10;
+  return { minWidth: 240, autoPanPaddingTopLeft: L.point(10, covered) };
+}
+
 map.on("click", async (e) => {
   if (!meta) return;
   const id = meta.id;
@@ -172,7 +178,7 @@ map.on("click", async (e) => {
     marker.bindPopup(
       `<div class="pt-value">${dateSel.value}: ${fmt(cur)} ${meta.unit}</div>` +
       `<div>${e.latlng.lat.toFixed(2)}°N ${e.latlng.lng.toFixed(2)}°E</div>${chart}`,
-      { minWidth: 240 }
+      popupOptions()
     ).openPopup();
   } catch (err) {
     console.error("値の取得に失敗", err);

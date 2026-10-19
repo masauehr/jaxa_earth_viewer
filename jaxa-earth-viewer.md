@@ -131,6 +131,6 @@ jaxa_earth_viewer/
 ## 7. 次のアクション
 
 [plan.md](plan.md) に集約。要点:
-1. JavaScript版（JAXA Earth API v2.0.1）＋ Render 公開: **J0 検証完了・GO**（[docs/js_j0_report.md](docs/js_j0_report.md)）、**J1・J2 完了**（`web_js/` に JS版。14件表示・ズーム再取得・スライダー/再生・地点クリックの時系列。起動は `python3 -m http.server 8767 -d web_js`）。次は J3（Render 公開）
+1. JavaScript版（JAXA Earth API v2.0.1）＋ Render 公開: **J0 検証完了・GO**（[docs/js_j0_report.md](docs/js_j0_report.md)）、**J1・J2 完了**（`web_js/` に JS版。14件表示・ズーム再取得・スライダー/再生・地点クリックの時系列。起動は `python3 -m http.server 8767 -d web_js`）。**J3: 公開オリジン(github.io)でのCORS確認済み・`render.yaml` 用意済み**。JS版の公開確認用URL: https://masauehr.github.io/jaxa_earth_viewer/js-version/ 。残りは Render ダッシュボードで Blueprint を作成するだけ（手順は [plan.md](plan.md) の 2.9）
 2. 追加データセット（夜間LST・夜間SMC・降水半月値ほか）
 3. 運用: 数日おきに `launchd.log` と Pages の更新を確認する

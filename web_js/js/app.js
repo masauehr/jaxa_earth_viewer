@@ -186,6 +186,12 @@ map.on("moveend", () => {
 });
 
 // ---- 地点クリック: 値と時系列 ----
+// スマホ幅ではパネルが画面上部を覆うため、ポップアップがその裏に隠れないように自動パンの余白を取る
+function popupOptions() {
+  const covered = window.innerWidth <= 480 ? Math.ceil(el("panel").getBoundingClientRect().bottom) + 10 : 10;
+  return { minWidth: 240, autoPanPaddingTopLeft: L.point(10, covered) };
+}
+
 function closePoint() {
   if (marker) { map.removeLayer(marker); marker = null; }
 }
@@ -239,7 +245,7 @@ map.on("click", async (e) => {
   if (lat < s || lat >= n || lng < w || lng >= ea) return;
   closePoint();
   marker = L.circleMarker(e.latlng, { radius: 5, color: "#000", weight: 2, fillOpacity: 0 }).addTo(map);
-  marker.bindPopup("読み込み中…", { minWidth: 240 }).openPopup();
+  marker.bindPopup("読み込み中…", popupOptions()).openPopup();
   const where = `${lat.toFixed(2)}°N ${lng.toFixed(2)}°E`;
   // 表示中の日付の値は、描画に使ったデータから直接読む（時系列の取得を待たずに先に表示する）
   const cur = current.data;
