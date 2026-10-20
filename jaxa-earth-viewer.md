@@ -4,7 +4,8 @@
 
 JAXA が提供する **JAXA Earth API**（STAC / COG ベース、Python版・JavaScript版あり）から衛星データを取得し、地図上に表示するプロダクト。
 
-> 状態: **JS版に一本化（2026-10-19）**。公開は **Render: https://jaxa-earth-viewer.onrender.com/** と **GitHub Pages: https://masauehr.github.io/jaxa_earth_viewer/**（どちらも `web_js/`）。Python生成版（`web/`・`scripts/gen_overlay.py`・launchd日次更新・`web/data`）は廃止。検証は [docs/phase0_report.md](docs/phase0_report.md)。
+> 状態: **JS版に一本化（2026-10-19）**。公開は **Render: https://jaxa-earth-viewer.onrender.com/** と **GitHub Pages: https://masauehr.github.io/jaxa_earth_viewer/
+**（どちらも `web_js/`）。Python生成版（`web/`・`scripts/gen_overlay.py`・launchd日次更新・`web/data`）は廃止。検証は [docs/phase0_report.md](docs/phase0_report.md)。
 
 > 今後の計画（追加データセット候補、JavaScript版＋Render公開の検討）は [plan.md](plan.md) を参照。
 
