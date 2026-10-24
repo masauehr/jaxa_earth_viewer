@@ -138,3 +138,9 @@ jaxa_earth_viewer/
 1. JavaScript版（JAXA Earth API v2.0.1）＋ Render 公開: **J0 検証完了・GO**（[docs/js_j0_report.md](docs/js_j0_report.md)）、**J1・J2 完了**（`web_js/` に JS版。14件表示・ズーム再取得・スライダー/再生・地点クリックの時系列。起動は `python3 -m http.server 8767 -d web_js`）。**J3 完了: Render で公開済み https://jaxa-earth-viewer.onrender.com/**（`render.yaml` の静的サイト。`web_js/**` の push で自動デプロイ）。次は J4（現行Python生成版の整理。[plan.md](plan.md) 参照）
 2. 追加データセット（夜間LST・夜間SMC・降水半月値ほか）
 3. 運用: Render の稼働と、JAXA 側のデータ更新（最新日が進むこと）を時々確認する。JS版は日次更新が不要
+
+## 更新履歴（セキュリティ・依存更新）
+
+| 日付 | 内容 |
+|------|------|
+| 2026-10-24 | 実行環境（venv）の依存パッケージ（certifi）を脆弱性点検に基づき更新。リポジトリのコード変更なし。週次の自動点検は別の非公開プロジェクトで管理している。 |
